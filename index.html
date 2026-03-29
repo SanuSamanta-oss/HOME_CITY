@@ -1,1 +1,1426 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমার শহর নৈহাটি</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+Bengali:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sepia-deep: #2C1A0E;
+    --sepia-dark: #3D2314;
+    --sepia-mid: #6B3A1F;
+    --sepia-warm: #8B5E3C;
+    --sepia-gold: #C8941A;
+    --sepia-light-gold: #D4A843;
+    --sepia-cream: #F5E6C8;
+    --sepia-parchment: #EDD9A3;
+    --sepia-pale: #FAF3E0;
+    --ink-dark: #1A0F08;
+    --glow-color: rgba(212,168,67,0.18);
+    --glow-strong: rgba(212,168,67,0.35);
+    --red-heritage: #8B1A1A;
+    --green-heritage: #2D5A27;
+  }
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--sepia-deep);
+    color: var(--sepia-cream);
+    font-family: 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* CUSTOM CURSOR */
+  #cursor {
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--sepia-gold);
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: screen;
+  }
+
+  #cursor-glow {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow-strong) 0%, var(--glow-color) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease-out;
+  }
+
+  #cursor-ring {
+    position: fixed;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(212,168,67,0.5);
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.14s ease-out, width 0.2s, height 0.2s;
+  }
+
+  /* TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(28,16,6,0.97) 0%, rgba(28,16,6,0.85) 100%);
+    border-bottom: 1px solid rgba(200,148,26,0.3);
+    backdrop-filter: blur(8px);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-brand {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1.25rem;
+    color: var(--sepia-gold);
+    letter-spacing: 0.04em;
+    font-weight: 600;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--sepia-parchment);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--sepia-gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--sepia-gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #4a2510 0%, #2C1A0E 40%, #1A0F08 100%);
+  }
+
+  .hero-river {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(180deg, transparent 0%, rgba(30,55,80,0.25) 60%, rgba(20,40,70,0.5) 100%);
+    overflow: hidden;
+  }
+
+  .river-wave {
+    position: absolute;
+    bottom: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(40,80,120,0.12) 40px,
+      rgba(40,80,120,0.12) 80px
+    );
+    animation: river-flow 12s linear infinite;
+    opacity: 0.5;
+  }
+
+  @keyframes river-flow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(33.33%); }
+  }
+
+  .hero-silhouette {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    opacity: 0.15;
+  }
+
+  .hero-ornament {
+    width: 320px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sepia-gold), transparent);
+    margin: 20px auto;
+    position: relative;
+  }
+
+  .hero-ornament::before, .hero-ornament::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--sepia-gold);
+    font-size: 10px;
+  }
+  .hero-ornament::before { left: 60px; }
+  .hero-ornament::after { right: 60px; }
+
+  .hero-subtitle-en {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.75rem;
+    color: var(--sepia-warm);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: fadeInDown 1.2s ease;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 700;
+    color: var(--sepia-gold);
+    text-align: center;
+    line-height: 1.1;
+    text-shadow: 0 0 60px rgba(200,148,26,0.4), 0 4px 30px rgba(0,0,0,0.8);
+    animation: fadeInUp 1s ease 0.3s both;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-desc {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1.1rem;
+    color: var(--sepia-parchment);
+    text-align: center;
+    max-width: 640px;
+    line-height: 1.8;
+    margin-top: 20px;
+    opacity: 0.85;
+    animation: fadeInUp 1s ease 0.6s both;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(200,148,26,0.6);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    animation: pulse 2s ease infinite;
+  }
+
+  .scroll-hint span { font-size: 1.4rem; }
+
+  @keyframes pulse { 0%,100% { opacity: 0.5; transform: translateX(-50%) translateY(0); } 50% { opacity: 1; transform: translateX(-50%) translateY(6px); } }
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+
+  /* SECTION HEADERS */
+  .section-header {
+    text-align: center;
+    padding: 80px 20px 50px;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--sepia-warm);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--sepia-gold);
+    margin-bottom: 16px;
+  }
+
+  .section-divider {
+    width: 220px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sepia-gold), transparent);
+    margin: 0 auto 12px;
+    position: relative;
+  }
+
+  .section-divider::after {
+    content: '✦';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    color: var(--sepia-gold);
+    font-size: 12px;
+    background: var(--sepia-deep);
+    padding: 0 6px;
+  }
+
+  /* HERITAGE GRID */
+  .heritage-section {
+    padding: 0 40px 80px;
+    background: linear-gradient(180deg, var(--sepia-deep) 0%, #1E0E06 100%);
+  }
+
+  .heritage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .heritage-card {
+    background: linear-gradient(145deg, rgba(61,35,20,0.9), rgba(28,16,6,0.95));
+    border: 1px solid rgba(200,148,26,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+
+  .heritage-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(200,148,26,0.6);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(200,148,26,0.1);
+  }
+
+  .heritage-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--sepia-gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .heritage-card:hover::before { opacity: 1; }
+
+  .card-icon-area {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(61,35,20,0.4), rgba(15,8,3,0.7));
+  }
+
+  .card-icon-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.5s, opacity 0.3s;
+  }
+
+  .heritage-card:hover .card-icon-bg {
+    transform: scale(1.08);
+    opacity: 0.15;
+  }
+
+  .card-icon {
+    font-size: 4.5rem;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 20px rgba(200,148,26,0.5));
+    transition: transform 0.3s;
+  }
+
+  .heritage-card:hover .card-icon { transform: scale(1.1); }
+
+  .card-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(200,148,26,0.15);
+    border: 1px solid rgba(200,148,26,0.4);
+    color: var(--sepia-gold);
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .card-body {
+    padding: 22px 24px 20px;
+  }
+
+  .card-title-bn {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--sepia-gold);
+    margin-bottom: 4px;
+  }
+
+  .card-title-en {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--sepia-warm);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .card-desc {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 0.9rem;
+    color: rgba(245,230,200,0.75);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--sepia-gold);
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(200,148,26,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.3s;
+  }
+
+  .heritage-card:hover .card-cta { border-color: var(--sepia-gold); }
+
+  /* MAP SECTION */
+  .map-section {
+    background: linear-gradient(180deg, #1E0E06 0%, #150B04 100%);
+    padding: 0 40px 80px;
+  }
+
+  .map-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 1px solid rgba(200,148,26,0.25);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(200,148,26,0.06);
+    position: relative;
+  }
+
+  .map-overlay-label {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 10;
+    background: rgba(28,16,6,0.85);
+    border: 1px solid rgba(200,148,26,0.4);
+    padding: 10px 18px;
+    border-radius: 3px;
+    backdrop-filter: blur(8px);
+  }
+
+  .map-overlay-label p {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1rem;
+    color: var(--sepia-gold);
+    font-weight: 600;
+  }
+
+  .map-overlay-label span {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.6rem;
+    color: var(--sepia-warm);
+    letter-spacing: 0.15em;
+  }
+
+  #map-iframe {
+    width: 100%;
+    height: 520px;
+    border: none;
+    display: block;
+    filter: sepia(40%) hue-rotate(-10deg) contrast(1.1);
+  }
+
+  /* FOOD FLASHCARD SECTION */
+  .food-section {
+    background: linear-gradient(180deg, #150B04 0%, var(--sepia-deep) 100%);
+    padding: 0 40px 80px;
+  }
+
+  .food-carousel {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .food-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sepia-gold) transparent;
+  }
+
+  .food-track::-webkit-scrollbar { height: 3px; }
+  .food-track::-webkit-scrollbar-thumb { background: var(--sepia-gold); border-radius: 2px; }
+
+  .food-card {
+    min-width: 260px;
+    scroll-snap-align: start;
+    background: linear-gradient(145deg, rgba(61,35,20,0.85), rgba(28,16,6,0.9));
+    border: 1px solid rgba(200,148,26,0.2);
+    border-radius: 4px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .food-card:hover {
+    border-color: rgba(200,148,26,0.5);
+    transform: translateY(-4px);
+  }
+
+  .food-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sepia-gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .food-card:hover::before { opacity: 1; }
+
+  .food-emoji { font-size: 3.5rem; margin-bottom: 14px; display: block; }
+
+  .food-name-bn {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--sepia-gold);
+    margin-bottom: 4px;
+  }
+
+  .food-name-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--sepia-warm);
+    margin-bottom: 12px;
+  }
+
+  .food-desc {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 0.82rem;
+    color: rgba(245,230,200,0.7);
+    line-height: 1.65;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,5,2,0.92);
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    backdrop-filter: blur(12px);
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: linear-gradient(145deg, #3D2314, #2C1A0E);
+    border: 1px solid rgba(200,148,26,0.4);
+    border-radius: 6px;
+    max-width: 760px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.4s;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sepia-gold) transparent;
+  }
+
+  .modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-header {
+    padding: 36px 40px 28px;
+    border-bottom: 1px solid rgba(200,148,26,0.2);
+    position: sticky;
+    top: 0;
+    background: #3D2314;
+    z-index: 2;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(200,148,26,0.1);
+    border: 1px solid rgba(200,148,26,0.3);
+    color: var(--sepia-gold);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+  }
+
+  .modal-close:hover { background: rgba(200,148,26,0.25); }
+
+  .modal-icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+
+  .modal-title-bn {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--sepia-gold);
+  }
+
+  .modal-title-en {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--sepia-warm);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .modal-body {
+    padding: 32px 40px 40px;
+  }
+
+  .modal-section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--sepia-gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .modal-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200,148,26,0.4), transparent);
+  }
+
+  .modal-desc {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1rem;
+    color: rgba(245,230,200,0.85);
+    line-height: 1.9;
+    margin-bottom: 28px;
+  }
+
+  .route-steps {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+
+  .route-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(200,148,26,0.1);
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 0.92rem;
+    color: rgba(245,230,200,0.8);
+    line-height: 1.6;
+  }
+
+  .route-step-num {
+    min-width: 28px;
+    height: 28px;
+    background: rgba(200,148,26,0.15);
+    border: 1px solid rgba(200,148,26,0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sepia-gold);
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .food-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .food-chip {
+    background: rgba(200,148,26,0.1);
+    border: 1px solid rgba(200,148,26,0.3);
+    border-radius: 2px;
+    padding: 6px 14px;
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 0.85rem;
+    color: var(--sepia-parchment);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .modal-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(200,148,26,0.2), rgba(200,148,26,0.08));
+    border: 1px solid rgba(200,148,26,0.4);
+    color: var(--sepia-gold);
+    text-decoration: none;
+    padding: 12px 24px;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    border-radius: 3px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .modal-map-link:hover {
+    background: linear-gradient(135deg, rgba(200,148,26,0.35), rgba(200,148,26,0.15));
+    border-color: var(--sepia-gold);
+  }
+
+  /* HISTORY FLASHCARDS */
+  .flashcard-section {
+    background: var(--sepia-deep);
+    padding: 0 40px 80px;
+  }
+
+  .flashcard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .flashcard {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+
+  .flashcard-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+
+  .flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flashcard-front, .flashcard-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 4px;
+    border: 1px solid rgba(200,148,26,0.2);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .flashcard-front {
+    background: linear-gradient(145deg, rgba(61,35,20,0.9), rgba(28,16,6,0.95));
+  }
+
+  .flashcard-back {
+    background: linear-gradient(145deg, rgba(200,148,26,0.12), rgba(50,25,10,0.98));
+    border-color: rgba(200,148,26,0.35);
+    transform: rotateY(180deg);
+  }
+
+  .flashcard-front .fc-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+  .flashcard-front .fc-q {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--sepia-gold);
+    line-height: 1.5;
+  }
+
+  .flashcard-front .fc-hint {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--sepia-warm);
+    margin-top: 12px;
+    opacity: 0.7;
+  }
+
+  .flashcard-back .fc-a {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 0.92rem;
+    color: var(--sepia-cream);
+    line-height: 1.75;
+  }
+
+  .flashcard-back .fc-year {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.8rem;
+    color: var(--sepia-gold);
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0F0704;
+    border-top: 1px solid rgba(200,148,26,0.2);
+    padding: 50px 40px 30px;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1.5rem;
+    color: var(--sepia-gold);
+    margin-bottom: 8px;
+  }
+
+  .footer-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--sepia-warm);
+    margin-bottom: 24px;
+  }
+
+  .footer-divider {
+    width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,148,26,0.4), transparent);
+    margin: 0 auto 20px;
+  }
+
+  .footer-copy {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: rgba(200,148,26,0.4);
+  }
+
+  /* UTILS */
+  .gold-line {
+    width: 80px;
+    height: 1px;
+    background: var(--sepia-gold);
+    margin: 0 auto;
+    opacity: 0.5;
+  }
+
+  .visible { opacity: 1; transform: none !important; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .heritage-section, .map-section, .food-section, .flashcard-section, footer { padding-left: 20px; padding-right: 20px; }
+    .hero-title { font-size: 2.8rem; }
+    .modal-body, .modal-header { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-glow"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-brand">আমার শহর নৈহাটি</div>
+  <ul class="nav-links">
+    <li><a href="#heritage">Heritage</a></li>
+    <li><a href="#map">Map</a></li>
+    <li><a href="#food">Food</a></li>
+    <li><a href="#history">ইতিহাস</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-river">
+    <div class="river-wave"></div>
+  </div>
+  <svg class="hero-silhouette" viewBox="0 0 1400 160" preserveAspectRatio="xMidYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Temple silhouettes -->
+    <rect x="60" y="80" width="20" height="80" fill="var(--sepia-cream)"/>
+    <polygon points="70,60 50,80 90,80" fill="var(--sepia-cream)"/>
+    <polygon points="70,40 60,60 80,60" fill="var(--sepia-cream)"/>
+    <rect x="120" y="60" width="30" height="100" fill="var(--sepia-cream)"/>
+    <polygon points="135,40 115,60 155,60" fill="var(--sepia-cream)"/>
+    <rect x="200" y="90" width="16" height="70" fill="var(--sepia-cream)"/>
+    <polygon points="208,75 196,90 220,90" fill="var(--sepia-cream)"/>
+    <rect x="280" y="70" width="40" height="90" fill="var(--sepia-cream)"/>
+    <polygon points="300,50 270,70 330,70" fill="var(--sepia-cream)"/>
+    <polygon points="300,30 285,50 315,50" fill="var(--sepia-cream)"/>
+    <rect x="380" y="95" width="18" height="65" fill="var(--sepia-cream)"/>
+    <rect x="420" y="85" width="25" height="75" fill="var(--sepia-cream)"/>
+    <polygon points="432,65 412,85 452,85" fill="var(--sepia-cream)"/>
+    <!-- Bridge -->
+    <rect x="500" y="110" width="200" height="10" fill="var(--sepia-cream)"/>
+    <line x1="510" y1="110" x2="520" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <line x1="540" y1="110" x2="530" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <line x1="560" y1="110" x2="570" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <line x1="590" y1="110" x2="580" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <line x1="610" y1="110" x2="620" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <line x1="640" y1="110" x2="630" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <line x1="660" y1="110" x2="670" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <line x1="690" y1="110" x2="685" y2="90" stroke="var(--sepia-cream)" stroke-width="2"/>
+    <!-- More buildings right side -->
+    <rect x="800" y="85" width="30" height="75" fill="var(--sepia-cream)"/>
+    <polygon points="815,65 795,85 835,85" fill="var(--sepia-cream)"/>
+    <rect x="880" y="95" width="20" height="65" fill="var(--sepia-cream)"/>
+    <rect x="960" y="75" width="35" height="85" fill="var(--sepia-cream)"/>
+    <polygon points="977,55 955,75 999,75" fill="var(--sepia-cream)"/>
+    <polygon points="977,38 962,55 992,55" fill="var(--sepia-cream)"/>
+    <rect x="1050" y="90" width="22" height="70" fill="var(--sepia-cream)"/>
+    <rect x="1120" y="80" width="28" height="80" fill="var(--sepia-cream)"/>
+    <polygon points="1134,60 1112,80 1156,80" fill="var(--sepia-cream)"/>
+    <rect x="1200" y="95" width="18" height="65" fill="var(--sepia-cream)"/>
+    <rect x="1270" y="70" width="32" height="90" fill="var(--sepia-cream)"/>
+    <polygon points="1286,50 1264,70 1308,70" fill="var(--sepia-cream)"/>
+  </svg>
+
+  <div style="position:relative; z-index:5; text-align:center; padding: 0 20px;">
+    <div class="hero-subtitle-en">Est. 1869 · North 24 Parganas · West Bengal</div>
+    <div class="hero-ornament"></div>
+    <h1 class="hero-title">আমার শহর নৈহাটি</h1>
+    <div class="hero-ornament"></div>
+    <p class="hero-desc">হুগলি নদীর পশ্চিম তীরে অবস্থিত একটি ঐতিহাসিক শহর — বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের জন্মস্থান, সংস্কৃতি ও ঐতিহ্যের লালনক্ষেত্র।</p>
+  </div>
+
+  <div class="scroll-hint">
+    <span>↓</span>
+    <p style="font-family:'Cinzel Decorative',serif; font-size:0.58rem; letter-spacing:0.25em;">EXPLORE</p>
+  </div>
+</section>
+
+<!-- HERITAGE SITES -->
+<section id="heritage" class="heritage-section">
+  <div class="section-header">
+    <span class="section-label">Heritage & Culture</span>
+    <h2 class="section-title">ঐতিহাসিক স্থানসমূহ</h2>
+    <div class="section-divider"></div>
+    <p style="font-family:'Noto Serif Bengali',serif; font-size:0.95rem; color:rgba(245,230,200,0.6); max-width:600px; margin:0 auto; line-height:1.8;">প্রতিটি স্থানে ক্লিক করুন — সেরা পথনির্দেশ ও স্থানীয় খাবারের তালিকা দেখতে পাবেন।</p>
+  </div>
+  <div class="heritage-grid" id="heritage-grid"></div>
+</section>
+
+<!-- MAP -->
+<section id="map" class="map-section">
+  <div class="section-header">
+    <span class="section-label">Virtual Navigation</span>
+    <h2 class="section-title">মানচিত্র</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="map-container">
+    <div class="map-overlay-label">
+      <p>নৈহাটি শহর</p>
+      <span>NAIHATI · HOOGHLY RIVERFRONT</span>
+    </div>
+    <iframe id="map-iframe"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14718.283076527165!2d88.4097!3d22.8933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f88f8e9a46ae41%3A0x9c72d1e4e5c1e87a!2sNaihati%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Naihati Map">
+    </iframe>
+  </div>
+</section>
+
+<!-- FOOD SECTION -->
+<section id="food" class="food-section">
+  <div class="section-header">
+    <span class="section-label">Local Cuisine</span>
+    <h2 class="section-title">নৈহাটির সেরা খাবার</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="food-carousel">
+    <div class="food-track" id="food-track"></div>
+  </div>
+</section>
+
+<!-- HISTORY FLASHCARDS -->
+<section id="history" class="flashcard-section">
+  <div class="section-header">
+    <span class="section-label">Did You Know?</span>
+    <h2 class="section-title">ইতিহাসের পাতা থেকে</h2>
+    <div class="section-divider"></div>
+    <p style="font-family:'Noto Serif Bengali',serif; font-size:0.95rem; color:rgba(245,230,200,0.6); max-width:600px; margin:0 auto; line-height:1.8;">কার্ডে ক্লিক করুন উত্তর জানতে।</p>
+  </div>
+  <div class="flashcard-grid" id="flashcard-grid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">আমার শহর নৈহাটি</div>
+  <div class="footer-sub">City of Literature · Heritage · Hooghly</div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2024 · নৈহাটি হেরিটেজ প্রজেক্ট · NAIHATI HERITAGE PROJECT</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <span class="modal-icon" id="modal-icon"></span>
+      <div class="modal-title-bn" id="modal-title-bn"></div>
+      <div class="modal-title-en" id="modal-title-en"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section-title">বিবরণ</div>
+      <div class="modal-desc" id="modal-desc"></div>
+
+      <div class="modal-section-title">সেরা পথ</div>
+      <ul class="route-steps" id="modal-route"></ul>
+
+      <div class="modal-section-title">স্থানীয় খাবার</div>
+      <div class="food-chips" id="modal-foods"></div>
+
+      <a class="modal-map-link" id="modal-map-link" href="#" target="_blank">
+        🗺 Google Maps-এ দেখুন &nbsp;→
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const places = [
+  {
+    id: 'bankim',
+    titleBn: 'বঙ্কিমচন্দ্রের জন্মস্থান',
+    titleEn: 'Birthplace of Bankim Chandra',
+    badge: 'LITERARY HERITAGE',
+    icon: '📜',
+    desc: 'ভারতের জাতীয় সংগীত "বন্দে মাতরম"-এর রচয়িতা ঋষি বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের জন্মস্থান কান্তালপাড়া গ্রাম, নৈহাটি। ১৮৩৮ সালের ২৬ জুন এখানে তাঁর জন্ম হয়। এটি বাংলা সাহিত্যের এক পবিত্র তীর্থস্থান।',
+    route: [
+      'নৈহাটি রেলওয়ে স্টেশন থেকে যাত্রা শুরু করুন।',
+      'স্টেশন গেট থেকে অটো বা রিকশায় কান্তালপাড়া যান — মাত্র ১০ মিনিট।',
+      'বঙ্কিমের পৈতৃক বাড়ি ও স্মৃতিচিহ্ন দেখুন।',
+      'পাশের রবীন্দ্র পথ ধরে হেঁটে ফিরে আসুন।'
+    ],
+    foods: ['ক্ষীরের সন্দেশ 🍮', 'মিষ্টি দই 🥛', 'পান্তুয়া 🟤', 'রাবড়ি 🍯'],
+    mapUrl: 'https://www.google.com/maps/search/Bankim+Chandra+Birthplace+Naihati',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.418!3d22.895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzQyLjAiTiA4OMKwMjUnMDQuOCJF!5e0!3m2!1sen!2sin!4v1710000000'
+  },
+  {
+    id: 'rajbari',
+    titleBn: 'নৈহাটি রাজবাড়ি',
+    titleEn: 'Naihati Rajbari — Royal Palace',
+    badge: 'ROYAL HERITAGE',
+    icon: '🏛️',
+    desc: 'নৈহাটি রাজবাড়ি বাংলার রাজকীয় ইতিহাসের জীবন্ত সাক্ষী। ঐতিহ্যবাহী ও ঔপনিবেশিক স্থাপত্যের মিশ্রণে গড়ে ওঠা এই প্রাসাদটি ফটোগ্রাফি ও ইতিহাস প্রেমীদের জন্য আদর্শ।',
+    route: [
+      'নৈহাটি স্টেশন থেকে মূল রাস্তায় টোটো নিন।',
+      'হুগলি নদীর দিকে এগিয়ে রাজবাড়ি রোড ধরুন।',
+      'প্রাসাদের বাগান ও সামনের অংশ দেখুন।',
+      'পাশের পুরনো বাজারে শেষ করুন।'
+    ],
+    foods: ['আলুর দম 🥔', 'লুচি 🫓', 'চমচম 🍬', 'জিলিপি 🌀'],
+    mapUrl: 'https://www.google.com/maps/search/Naihati+Rajbari',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.412!3d22.892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzMxLjIiTiA4OMKwMjQnNDMuMiJF!5e0!3m2!1sen!2sin!4v1710000001'
+  },
+  {
+    id: 'hooghly',
+    titleBn: 'হুগলি নদীর ঘাট',
+    titleEn: 'Hooghly River Ghat',
+    badge: 'SCENIC WATERFRONT',
+    icon: '🌊',
+    desc: 'হুগলি নদীর তীরে নৈহাটির ঘাটগুলি শহরের প্রাণ। ভোরের ধোঁয়াশা থেকে সূর্যাস্তের সোনালি আভা — নদীর রূপ প্রতিটি মুহূর্তে বদলায়। নৌকা ভ্রমণে বিপরীত তীরে চিনসুরা যাওয়া যায়।',
+    route: [
+      'স্টেশন থেকে সরাসরি পশ্চিম দিকে হাঁটুন (১৫ মিনিট)।',
+      'রামঘাট পৌঁছে নৌকা ভাড়া করুন।',
+      'ফেরি ঘাট থেকে চিনসুরা যাওয়া যায়।',
+      'সন্ধ্যায় ঘাটের আলোকসজ্জা উপভোগ করুন।'
+    ],
+    foods: ['ভেটকি মাছভাজা 🐟', 'ঝালমুড়ি 🌶️', 'চা ☕', 'মোচার ঘণ্ট 🍛'],
+    mapUrl: 'https://www.google.com/maps/search/Naihati+Ghat+Hooghly+River',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.404!3d22.893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzM0LjgiTiA4OMKwMjQnMTQuNCJF!5e0!3m2!1sen!2sin!4v1710000002'
+  },
+  {
+    id: 'boromaa',
+    titleBn: 'বড় মা কালী মন্দির',
+    titleEn: 'Boro Maa Kali Temple',
+    badge: 'SACRED · 100+ YRS',
+    icon: '🪔',
+    desc: '১০১ বছরেরও বেশি পুরনো এই কালী মন্দির নৈহাটির সবচেয়ে বিখ্যাত ধর্মীয় স্থান। কালী পূজার সময় এখানে হাজার হাজার ভক্ত সমাগম হন। মন্দিরের আলোকসজ্জা রাতের শহরকে আলোকিত করে।',
+    route: [
+      'নৈহাটি স্টেশন থেকে রিকশায় ১০ মিনিট।',
+      'মূল বাজার পেরিয়ে মন্দির রোডে প্রবেশ করুন।',
+      'প্রসাদ সংগ্রহ করুন ও ভেতরে প্রণাম করুন।',
+      'পাশের ঘাটে কিছুক্ষণ বসে বিশ্রাম নিন।'
+    ],
+    foods: ['খিচুড়ি 🍚', 'লাবড়া 🥘', 'পাঁচমিশালি তরকারি 🍲', 'নারকেলের নাড়ু 🥥'],
+    mapUrl: 'https://www.google.com/maps/search/Boro+Maa+Kali+Temple+Naihati',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.415!3d22.890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzI0LjAiTiA4OMKwMjQnNTQuMCJF!5e0!3m2!1sen!2sin!4v1710000003'
+  },
+  {
+    id: 'setu',
+    titleBn: 'সম্প্রীতি সেতু',
+    titleEn: 'Sampriti Bridge (Former Jubilee Bridge)',
+    badge: 'COLONIAL LANDMARK',
+    icon: '🌉',
+    desc: '১৮৮৭ সালে উদ্বোধন হওয়া জুবিলি ব্রিজের স্থলে ২০১৭ সালে নির্মিত সম্প্রীতি সেতু হুগলি নদীর উপর নৈহাটি ও ব্যান্ডেলকে সংযুক্ত করে। পুরনো লোহার সেতুর স্মৃতি এখনো বাংলার মনে জীবন্ত।',
+    route: [
+      'নৈহাটি স্টেশন থেকে অটোতে সেতুর কাছে যান।',
+      'পায়ে হেঁটে সেতু পার হন — দুই দিকের দৃশ্য অসাধারণ।',
+      'ব্যান্ডেল দিকে গেলে ব্যান্ডেল চার্চ দেখুন।',
+      'সন্ধ্যায় সেতুর আলোর ছায়া নদীতে দেখুন।'
+    ],
+    foods: ['শিঙাড়া 🥟', 'চা ☕', 'পুরি-তরকারি 🫓', 'ঘুগনি 🟡'],
+    mapUrl: 'https://www.google.com/maps/search/Sampriti+Bridge+Naihati',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.400!3d22.892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzMxLjIiTiA4OMKwMjQnMDAuMCJF!5e0!3m2!1sen!2sin!4v1710000004'
+  },
+  {
+    id: 'stadium',
+    titleBn: 'বঙ্কিমাঞ্জলি স্টেডিয়াম',
+    titleEn: 'Bamkimanjali Stadium',
+    badge: 'SPORTS LANDMARK',
+    icon: '⚽',
+    desc: '২৫,০০০ আসনবিশিষ্ট বঙ্কিমাঞ্জলি স্টেডিয়াম নৈহাটির সবচেয়ে বড় ক্রীড়া কমপ্লেক্স। ২০১৯ সালে উদ্বোধিত এই স্টেডিয়াম কলকাতা ফুটবল লিগ ও নৈহাটি গোল্ড কাপের আয়োজন করে।',
+    route: [
+      'নৈহাটি স্টেশন থেকে রিকশায় ৫ মিনিট।',
+      'কলেজ রোড ধরে সরাসরি স্টেডিয়ামে যান।',
+      'ম্যাচের দিন টিকিট কাউন্টার থেকে ঢুকুন।',
+      'পাশের খাবারের দোকানে বিকেলের নাস্তা করুন।'
+    ],
+    foods: ['ঝালমুড়ি 🌶️', 'আলুকাবলি 🥔', 'চা ☕', 'সমোসা 🥟'],
+    mapUrl: 'https://www.google.com/maps/search/Naihati+Bamkimanjali+Stadium',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.416!3d22.888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzE2LjgiTiA4OMKwMjQnNTcuNiJF!5e0!3m2!1sen!2sin!4v1710000005'
+  },
+  {
+    id: 'jagannath',
+    titleBn: 'জগন্নাথ মন্দির',
+    titleEn: 'Jagannath Temple',
+    badge: 'ANCIENT TEMPLE',
+    icon: '🛕',
+    desc: 'নৈহাটির ঐতিহাসিক জগন্নাথ মন্দির শতাব্দী প্রাচীন। রথযাত্রার সময় এই মন্দিরকে কেন্দ্র করে বিশাল উৎসব হয়। মন্দিরের স্থাপত্য ও ভাস্কর্য বাংলার ধর্মীয় শিল্পকলার উৎকৃষ্ট নিদর্শন।',
+    route: [
+      'স্টেশন থেকে মূল বাজার রোড ধরুন।',
+      'মন্দির রোডে ঢুকে সরাসরি এগিয়ে যান।',
+      'রথযাত্রায় রথের দড়ি টানুন — অনন্য অভিজ্ঞতা।',
+      'মন্দিরের প্রসাদ অবশ্যই নিন।'
+    ],
+    foods: ['মহাপ্রসাদ 🍛', 'ডাল-ভাত 🍚', 'খেজুর গুড়ের পায়েস 🍮', 'বাসন্তী পোলাও 🌾'],
+    mapUrl: 'https://www.google.com/maps/search/Jagannath+Temple+Naihati',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.413!3d22.891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzI3LjYiTiA4OMKwMjQnNDYuOCJF!5e0!3m2!1sen!2sin!4v1710000006'
+  },
+  {
+    id: 'anushilan',
+    titleBn: 'অনুশীলন সমিতি স্মৃতিস্থান',
+    titleEn: 'Anushilan Samiti Memorial Site',
+    badge: 'FREEDOM STRUGGLE',
+    icon: '⚔️',
+    desc: 'স্বাধীনতা সংগ্রামী প্রমথনাথ মিত্র নৈহাটির বাসিন্দা ছিলেন এবং তিনিই অনুশীলন সমিতির প্রতিষ্ঠাতা। ব্রিটিশ বিরোধী আন্দোলনের এই কেন্দ্র আজও ইতিহাস প্রেমীদের টানে।',
+    route: [
+      'নৈহাটি স্টেশন থেকে পূর্ব দিকে হাঁটুন।',
+      'পুরনো বাড়ির এলাকায় স্থানীয়দের জিজ্ঞেস করুন।',
+      'এই এলাকায় স্বাধীনতা সংগ্রামের গল্প জানুন।',
+      'কাছের চায়ের দোকানে বসে ইতিহাস আলোচনা করুন।'
+    ],
+    foods: ['সরষে ইলিশ 🐟', 'বেগুনি 🍆', 'তেলেভাজা 🫓', 'মিষ্টি দই 🥛'],
+    mapUrl: 'https://www.google.com/maps/search/Anushilan+Samiti+Naihati',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.417!3d22.893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDUzJzM0LjgiTiA4OMKwMjUnMDEuMiJF!5e0!3m2!1sen!2sin!4v1710000007'
+  },
+  {
+    id: 'railway',
+    titleBn: 'নৈহাটি জংশন রেলওয়ে স্টেশন',
+    titleEn: 'Naihati Junction Railway Station',
+    badge: 'COLONIAL RAILWAY',
+    icon: '🚂',
+    desc: '১৮৫৭ সালে ইস্টার্ন বেঙ্গল রেলওয়ে প্রতিষ্ঠার সাথে নৈহাটি রেলের মানচিত্রে আসে। এই স্টেশন কলকাতা শহরতলীর রেলনেটওয়ার্কের গুরুত্বপূর্ণ জংশন এবং ঔপনিবেশিক স্থাপত্যের নিদর্শন।',
+    route: [
+      'সিয়ালদহ স্টেশন থেকে ট্রেনে মাত্র ৩৮ কিলোমিটার।',
+      'ব্যারাকপুর থেকে মাত্র ১৬ কিলোমিটার।',
+      'স্টেশনের পুরনো ভবনটির স্থাপত্য উপভোগ করুন।',
+      'স্টেশন চত্বর থেকে শহরের অন্যত্র যাত্রা শুরু করুন।'
+    ],
+    foods: ['স্টেশনের চা ☕', 'কচুরি-আলুর দম 🫓', 'রাধাবল্লভী 🟡', 'কাটলেট 🍖'],
+    mapUrl: 'https://www.google.com/maps/search/Naihati+Junction+Railway+Station',
+    mapEmbed: '!1m18!1m12!1m3!1d3000!2d88.4146!3d22.8933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f8a36e2b0aadf1%3A0x6b5c3e8afc09f1e!2sNaihati+Junction+Railway+Station!5e0!3m2!1sen!2sin!4v1710000008'
+  }
+];
+
+const foods = [
+  { emoji: '🐟', nameBn: 'সরষে ইলিশ', nameEn: 'Shorshe Ilish', desc: 'সরষে পেস্টে রান্না হিলসা মাছ — নৈহাটির নদীর তাজা ইলিশ দিয়ে তৈরি বাংলার সর্বোচ্চ রন্ধনশৈলী।' },
+  { emoji: '🍮', nameBn: 'ক্ষীরের সন্দেশ', nameEn: 'Kheerer Sandesh', desc: 'ঘরে তৈরি ছানা ও চিনির অপূর্ব মিলনে তৈরি সন্দেশ — নৈহাটির মিষ্টির দোকানগুলির সেরা পরিচয়।' },
+  { emoji: '🥛', nameBn: 'মিষ্টি দই', nameEn: 'Mishti Doi', desc: 'খাঁটি দুধ থেকে তৈরি মিষ্টি দই, মাটির পাত্রে পরিবেশিত — বাংলার ঐতিহ্যবাহী ডেজার্ট।' },
+  { emoji: '🍛', nameBn: 'মোচার ঘণ্ট', nameEn: 'Mochar Ghonto', desc: 'কলার মোচা দিয়ে তৈরি বাঙালি পদ — নারকেল ও মশলার সমন্বয়ে অনন্য স্বাদ।' },
+  { emoji: '🌀', nameBn: 'জিলিপি', nameEn: 'Jilapi', desc: 'গরম গরম রাবড়ির সাথে কুরমুর জিলিপি — নৈহাটির সকালের নাস্তার অপরিহার্য অংশ।' },
+  { emoji: '🌶️', nameBn: 'ঝালমুড়ি', nameEn: 'Jhalmuri', desc: 'মুড়ি, সরষের তেল, কাঁচা মরিচ ও মশলার মিশ্রণে তৈরি নৈহাটির ঘাটের বিখ্যাত পথখাবার।' },
+  { emoji: '🍚', nameBn: 'খিচুড়ি-লাবড়া', nameEn: 'Khichuri & Labra', desc: 'বর্ষায় গোবিন্দ ভোগ চালের খিচুড়ি আর মিশ্র সবজির লাবড়া — দেবীর প্রসাদ ও ঘরের স্বাদ এক সাথে।' },
+  { emoji: '🐟', nameBn: 'ভেটকি মাছভাজা', nameEn: 'Bhetki Maach Bhaja', desc: 'হুগলি নদীর তাজা ভেটকি মাছ সরষের তেলে ভাজা — কুরকুরে মুচমুচে, অনন্য স্বাদ।' },
+];
+
+const flashcards = [
+  { icon: '📅', q: 'নৈহাটি পৌরসভা কত সালে প্রতিষ্ঠিত হয়?', year: '১৮৬৯', a: 'নৈহাটি পৌরসভা ১৮৬৯ সালে প্রতিষ্ঠিত হয় — এটি উত্তর ২৪ পরগনার অন্যতম প্রাচীন পৌরসভা।' },
+  { icon: '✍️', q: '"বন্দে মাতরম" সংগীতের রচয়িতা কে?', year: 'বঙ্কিম', a: 'বঙ্কিমচন্দ্র চট্টোপাধ্যায় — নৈহাটির কান্তালপাড়ায় জন্মগ্রহণকারী এই মহান লেখক ভারতের জাতীয় সংগীত রচনা করেন।' },
+  { icon: '🚂', q: 'জুবিলি ব্রিজ কত সালে চালু হয়েছিল?', year: '১৮৮৭', a: 'হুগলি নদীর উপর জুবিলি ব্রিজ ২১ ফেব্রুয়ারি ১৮৮৭ সালে খোলা হয়। ২০১৭ সালে এটি সম্প্রীতি সেতু দ্বারা প্রতিস্থাপিত হয়।' },
+  { icon: '🏭', q: 'নৈহাটি কোন শিল্পের জন্য বিখ্যাত ছিল?', year: 'পাট শিল্প', a: 'নৈহাটি পাট ও কাগজ কলের জন্য বিখ্যাত ছিল। একসময় কলের সাইরেন শহরের সময়ের পরিচয় দিত।' },
+  { icon: '⚔️', q: 'অনুশীলন সমিতির প্রতিষ্ঠাতা কে?', year: 'প্রমথনাথ', a: 'বিপ্লবী প্রমথনাথ মিত্র — নৈহাটির এই বাসিন্দা অনুশীলন সমিতির প্রতিষ্ঠাতা, যা ব্রিটিশবিরোধী আন্দোলনের কেন্দ্র ছিল।' },
+  { icon: '⚽', q: 'বঙ্কিমাঞ্জলি স্টেডিয়ামের আসন সংখ্যা কত?', year: '২৫,০০০', a: 'নৈহাটির বঙ্কিমাঞ্জলি স্টেডিয়ামে ২৫,০০০ দর্শক বসতে পারেন। ২০১৯ সালে উদ্বোধিত এই স্টেডিয়ামে কলকাতা ফুটবল লিগের ম্যাচ হয়।' },
+  { icon: '🌊', q: 'নৈহাটি কোন নদীর তীরে অবস্থিত?', year: 'হুগলি', a: 'নৈহাটি হুগলি নদীর পশ্চিম তীরে অবস্থিত। নদীপথে ফেরিতে বিপরীত তীরে চিনসুরা যাওয়া যায়।' },
+  { icon: '📚', q: 'বঙ্কিমচন্দ্র বাংলা ভাষায় প্রথম উপন্যাস লেখেন কোনটি?', year: '১৮৬৫', a: '"দুর্গেশনন্দিনী" — ১৮৬৫ সালে প্রকাশিত এই উপন্যাসটি বাংলা ভাষার প্রথম উপন্যাস হিসেবে স্বীকৃত।' },
+];
+
+// ── RENDER ─────────────────────────────────────────────────────────────────────
+function renderHeritage() {
+  const grid = document.getElementById('heritage-grid');
+  grid.innerHTML = places.map(p => `
+    <div class="heritage-card" onclick="openModal('${p.id}')">
+      <div class="card-icon-area">
+        <div class="card-icon">${p.icon}</div>
+        <div class="card-badge">${p.badge}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title-bn">${p.titleBn}</div>
+        <div class="card-title-en">${p.titleEn}</div>
+        <div class="card-desc">${p.desc.substring(0, 110)}…</div>
+        <div class="card-cta">বিস্তারিত দেখুন →</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderFood() {
+  const track = document.getElementById('food-track');
+  track.innerHTML = foods.map(f => `
+    <div class="food-card">
+      <span class="food-emoji">${f.emoji}</span>
+      <div class="food-name-bn">${f.nameBn}</div>
+      <div class="food-name-en">${f.nameEn}</div>
+      <div class="food-desc">${f.desc}</div>
+    </div>
+  `).join('');
+}
+
+function renderFlashcards() {
+  const grid = document.getElementById('flashcard-grid');
+  grid.innerHTML = flashcards.map((fc, i) => `
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div class="fc-icon">${fc.icon}</div>
+          <div class="fc-q">${fc.q}</div>
+          <div class="fc-hint">CLICK TO REVEAL</div>
+        </div>
+        <div class="flashcard-back">
+          <div class="fc-year">${fc.year}</div>
+          <div class="fc-a">${fc.a}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── MODAL ──────────────────────────────────────────────────────────────────────
+function openModal(id) {
+  const p = places.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('modal-icon').textContent = p.icon;
+  document.getElementById('modal-title-bn').textContent = p.titleBn;
+  document.getElementById('modal-title-en').textContent = p.titleEn;
+  document.getElementById('modal-desc').textContent = p.desc;
+
+  document.getElementById('modal-route').innerHTML = p.route.map((r, i) => `
+    <li>
+      <span class="route-step-num">${i + 1}</span>
+      <span>${r}</span>
+    </li>
+  `).join('');
+
+  document.getElementById('modal-foods').innerHTML = p.foods.map(f => `
+    <div class="food-chip">${f}</div>
+  `).join('');
+
+  document.getElementById('modal-map-link').href = p.mapUrl;
+
+  // Update map embed
+  const iframe = document.getElementById('map-iframe');
+  iframe.src = `https://www.google.com/maps/embed?pb=${p.mapEmbed}&5m2!1sen!2sin`;
+
+  document.getElementById('modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  // Scroll map into view
+  setTimeout(() => {
+    document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 500);
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+
+  // Reset map
+  setTimeout(() => {
+    document.getElementById('map-iframe').src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14718.283076527165!2d88.4097!3d22.8933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f88f8e9a46ae41%3A0x9c72d1e4e5c1e87a!2sNaihati%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin";
+  }, 400);
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── CURSOR GLOW ─────────────────────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const cursorGlow = document.getElementById('cursor-glow');
+const cursorRing = document.getElementById('cursor-ring');
+
+let mx = 0, my = 0;
+let rx = 0, ry = 0;
+let gx = 0, gy = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animateCursor() {
+  rx += (mx - rx) * 0.14;
+  ry += (my - ry) * 0.14;
+  cursorRing.style.left = rx + 'px';
+  cursorRing.style.top = ry + 'px';
+
+  gx += (mx - gx) * 0.07;
+  gy += (my - gy) * 0.07;
+  cursorGlow.style.left = gx + 'px';
+  cursorGlow.style.top = gy + 'px';
+
+  requestAnimationFrame(animateCursor);
+}
+
+animateCursor();
+
+document.querySelectorAll('a, button, .heritage-card, .flashcard, .food-card, .modal-close').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '26px';
+    cursor.style.height = '26px';
+    cursor.style.opacity = '0.7';
+    cursorRing.style.width = '60px';
+    cursorRing.style.height = '60px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '16px';
+    cursor.style.height = '16px';
+    cursor.style.opacity = '1';
+    cursorRing.style.width = '44px';
+    cursorRing.style.height = '44px';
+  });
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderHeritage();
+renderFood();
+renderFlashcards();
+</script>
+</body>
+</html>
